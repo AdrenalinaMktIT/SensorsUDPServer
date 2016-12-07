@@ -33,9 +33,9 @@ namespace UDPListener
             get { return TokenizedDatagram[1]; }
         }
 
-        public int PacketNumber
+        public string PacketNumber
         {
-            get { return Convert.ToInt32(TokenizedDatagram[2]); }
+            get { return TokenizedDatagram[2]; }
         }
 
         public string TriggerEvent
@@ -129,7 +129,12 @@ namespace UDPListener
             }
 
             // Verifico los tipos de datos de la trama.
-            if (!TokenizedDatagram[1].All(char.IsDigit))
+            if (!IMEI.All(char.IsDigit) || IMEI.Count() != 15)
+            {
+                return false;
+            }
+
+            if (!PacketNumber.All(char.IsDigit) || PacketNumber.Count() != 4 || Convert.ToInt16(PacketNumber) < 1 || Convert.ToInt16(PacketNumber) > 1440)
             {
                 return false;
             }
