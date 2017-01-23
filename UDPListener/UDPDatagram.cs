@@ -109,9 +109,11 @@ namespace UDPListener
             get { return TokenizedDatagram[18]; }
         }
 
+        public bool Valid { get; private set; }
+
         private bool Validate()
         {
-            
+            Valid = false;
 
             // La trama debe poseer exactamente 20 componentes una vez tokenizada; caso contrario esta mal formada.
             if (TokenizedDatagram.Length != 20)
@@ -138,6 +140,8 @@ namespace UDPListener
             {
                 return false;
             }
+
+            Valid = true;
 
             return true;
 
